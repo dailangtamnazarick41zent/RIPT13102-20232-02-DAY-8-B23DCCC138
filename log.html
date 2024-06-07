@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Login </h1>
+    <form id="login">
+        <input type="text" id="username" name="username" placeholder="username" required> <br>
+        <input type="password" id="password" name="password" placeholder="password" required> <br>
+        <button type="submit">Login</button>
+    </form>
+
+    <p id="errorMessage" style="color:red; display:none;">Invalid username or password</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionStorage.getItem('loggedIn') === true) {
+                if (window.location.pathname.endsWith('login.html')) {
+            window.location.replace('admin.html');
+        }
+    } else {
+        if (window.location.pathname.endsWith('admin.html')) {
+            window.location.replace('login.html');
+        }
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    const logoutButton = document.getElementById('logoutButton');
+    const errorMessage = document.getElementById('errorMessage');
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'admin' && password === 'password') {
+                sessionStorage.setItem('loggedIn', 'true');
+                window.location.replace('admin.html');
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        });
+    }
+
+    if (logoutButton) {
+        logoutButton.addEventListener('click', function() {
+            sessionStorage.removeItem('loggedIn');
+            window.location.replace('login.html');
+        });
+    }
+});
+    </script>
+</body>
+</html>
